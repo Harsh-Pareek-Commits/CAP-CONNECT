@@ -6,8 +6,8 @@ public interface IQueryService {
 
 	
 	public  Query  addQuery(Query query);
-	public Query deleteQuery(long query_id);
-	public Query updateQuery(Query query);
+	public  Query deleteQuery(long query_id);
+	public  Query updateQuery(Query query);
 	
 	
 	

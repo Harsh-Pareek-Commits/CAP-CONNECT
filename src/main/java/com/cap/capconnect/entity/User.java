@@ -27,6 +27,8 @@ public class User {
 	@NotNull(message="Should not be empty")
 	private String password;
 	
+	private int type;
+	
 	public long getUser_id() {
 		return user_id;
 	}

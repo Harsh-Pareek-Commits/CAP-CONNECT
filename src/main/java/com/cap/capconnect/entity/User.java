@@ -9,10 +9,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="User")
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long user_id;
 	@Column(name="email")
 	@NotNull(message="Should not be empty")
@@ -27,7 +26,7 @@ public class User {
 	@NotNull(message="Should not be empty")
 	private String password;
 	
-	private int type;
+	//private int type;
 	
 	public long getUser_id() {
 		return user_id;

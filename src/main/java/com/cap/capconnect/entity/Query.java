@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -21,10 +22,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
-@Table(name="Query")
 public class Query {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long post_id;
 	
 	@NotNull(message="Should not be empty")
@@ -46,13 +46,28 @@ public class Query {
 	@Column(name="query_status")
 	private boolean query_status;
 	
-	//Query to category Mapping
-	@OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
-	@JoinTable(name = "Query_Cate", joinColumns = { @JoinColumn(name = "post_id") }, inverseJoinColumns = { @JoinColumn(name = "cate_id") })
-	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="cate_info", referencedColumnName="cate_id")
+	private Category category;
 	//query to user Mapping
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)  
-	@JoinColumn(name="user_id")
+	@OneToOne(fetch=FetchType.EAGER)  
+	@JoinColumn(name="user_info",referencedColumnName="user_id")
 	private User user; 
 	
 	public long getPost_id() {
@@ -87,24 +102,33 @@ public class Query {
 		this.query_status = query_status;
 	}
 	
-	public Query(long post_id, String title, String query_body, LocalDate query_date, boolean query_status) {
+	
+	public Query(long post_id, @NotNull(message = "Should not be empty") String title,
+			@NotNull(message = "Should not be empty") String query_body,
+			@FutureOrPresent(message = "Date cannot be past") LocalDate query_date,
+			@NotNull(message = "Should not be empty") boolean query_status, Category category, User user) {
 		super();
 		this.post_id = post_id;
 		this.title = title;
 		this.query_body = query_body;
 		this.query_date = query_date;
 		this.query_status = query_status;
+		this.category = category;
+		this.user = user;
 	}
+
 	public Query() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Query [post_id=" + post_id + ", title=" + title + ", query_body=" + query_body + ", query_date="
-				+ query_date + ", query_status=" + query_status + "]";
+				+ query_date + ", query_status=" + query_status + ", category=" + category + ", user=" + user + "]";
 	}
+	
+	
 	
 	
 	

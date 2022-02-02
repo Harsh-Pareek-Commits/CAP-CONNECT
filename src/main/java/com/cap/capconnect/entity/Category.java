@@ -9,11 +9,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="User")
 public class Category {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long cate_id;
 	@Column(name="cate_name")
 	@NotNull(message="Should not be empty")

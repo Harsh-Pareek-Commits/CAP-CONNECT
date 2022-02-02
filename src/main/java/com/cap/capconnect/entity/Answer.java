@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
@@ -19,10 +20,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
-@Table(name="Answer")
 public class Answer {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long ans_id;
 	
 	@Column(name="ans_body")
@@ -40,14 +40,33 @@ public class Answer {
 	private boolean ans_status;
 	
 	
-	//answer to query Mapping
-		@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)  
-		@JoinColumn(name="query_id")
+	public Query getQuery() {
+		return query;
+	}
+
+	public void setQuery(Query query) {
+		this.query = query;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setAns_body(String ans_body) {
+		this.ans_body = ans_body;
+	}
+		//answer to query Mapping
+		@OneToOne(fetch=FetchType.EAGER)  
+		@JoinColumn(name="query_info",referencedColumnName="post_id")
 		private Query query; 
 		
 	//answer to user Mapping
-		@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)  
-		@JoinColumn(name="user_id")
+		@OneToOne(fetch=FetchType.EAGER)  
+		@JoinColumn(name="user_info",referencedColumnName="user_id")
 		private User user; 
 	
 	public String getAns_body() {
@@ -76,23 +95,31 @@ public class Answer {
 	public void setAns_id(long ans_id) {
 		this.ans_id = ans_id;
 	}
-	public Answer(long ans_id, String ans_body, LocalDate ans_date, boolean ans_status) {
+	
+	
+	public Answer(long ans_id, @NotNull(message = "Should not be empty") String ans_body,
+			@FutureOrPresent(message = "Date cannot be past") LocalDate ans_date,
+			@NotNull(message = "Should not be empty") boolean ans_status, Query query, User user) {
 		super();
 		this.ans_id = ans_id;
 		this.ans_body = ans_body;
 		this.ans_date = ans_date;
 		this.ans_status = ans_status;
+		this.query = query;
+		this.user = user;
 	}
-	
+
 	public Answer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public String toString() {
 		return "Answer [ans_id=" + ans_id + ", ans_body=" + ans_body + ", ans_date=" + ans_date + ", ans_status="
-				+ ans_status + "]";
+				+ ans_status + ", query=" + query + ", user=" + user + "]";
 	}
+	
 	
 	
 	

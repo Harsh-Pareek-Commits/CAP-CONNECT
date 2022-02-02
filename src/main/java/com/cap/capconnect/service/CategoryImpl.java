@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.exception.CategoryNotFoundException;
 import com.cap.capconnect.repository.ICategoryRepository;
-
+@Service
 public class CategoryImpl implements ICategoryService {
 	Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 	@Autowired

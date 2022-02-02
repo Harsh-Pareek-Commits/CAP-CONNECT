@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.cap.capconnect.entity.User;
 import com.cap.capconnect.exception.UserNotFoundException;
 import com.cap.capconnect.repository.IUserRepository;
-
+@Service
 public class UserServiceImpl implements IUserService {
 	 Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 	@Autowired

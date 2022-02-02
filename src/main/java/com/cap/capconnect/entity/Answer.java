@@ -37,9 +37,49 @@ public class Answer {
 	
 	@Column(name="ans_status")
 	@NotNull(message="Should not be empty")
-	private boolean ans_status;
+	private int ans_status;
+	//answer to query Mapping
+	@OneToOne
+	@JoinColumn(name="query_info",referencedColumnName="post_id")
+	private Query query; 
 	
-	
+//answer to user Mapping
+	@OneToOne
+	@JoinColumn(name="user_info",referencedColumnName="user_id")
+	private User user;
+
+	public long getAns_id() {
+		return ans_id;
+	}
+
+	public void setAns_id(long ans_id) {
+		this.ans_id = ans_id;
+	}
+
+	public String getAns_body() {
+		return ans_body;
+	}
+
+	public void setAns_body(String ans_body) {
+		this.ans_body = ans_body;
+	}
+
+	public LocalDate getAns_date() {
+		return ans_date;
+	}
+
+	public void setAns_date(LocalDate ans_date) {
+		this.ans_date = ans_date;
+	}
+
+	public int getAns_status() {
+		return ans_status;
+	}
+
+	public void setAns_status(int ans_status) {
+		this.ans_status = ans_status;
+	}
+
 	public Query getQuery() {
 		return query;
 	}
@@ -56,50 +96,9 @@ public class Answer {
 		this.user = user;
 	}
 
-	public void setAns_body(String ans_body) {
-		this.ans_body = ans_body;
-	}
-		//answer to query Mapping
-		@OneToOne(fetch=FetchType.EAGER)  
-		@JoinColumn(name="query_info",referencedColumnName="post_id")
-		private Query query; 
-		
-	//answer to user Mapping
-		@OneToOne(fetch=FetchType.EAGER)  
-		@JoinColumn(name="user_info",referencedColumnName="user_id")
-		private User user; 
-	
-	public String getAns_body() {
-		return ans_body;
-	}
-
-	/*
-	 * public void setAns_body(String ans_body) { this.ans_body = ans_body; }
-	 */
-	public LocalDate getAns_date() {
-		return ans_date;
-	}
-	public void setAns_date(LocalDate ans_date) {
-		this.ans_date = ans_date;
-	}
-	public boolean isAns_status() {
-		return ans_status;
-	}
-	public void setAns_status(boolean ans_status) {
-		this.ans_status = ans_status;
-	}
-	
-	public long getAns_id() {
-		return ans_id;
-	}
-	public void setAns_id(long ans_id) {
-		this.ans_id = ans_id;
-	}
-	
-	
 	public Answer(long ans_id, @NotNull(message = "Should not be empty") String ans_body,
 			@FutureOrPresent(message = "Date cannot be past") LocalDate ans_date,
-			@NotNull(message = "Should not be empty") boolean ans_status, Query query, User user) {
+			@NotNull(message = "Should not be empty") int ans_status, Query query, User user) {
 		super();
 		this.ans_id = ans_id;
 		this.ans_body = ans_body;
@@ -109,22 +108,11 @@ public class Answer {
 		this.user = user;
 	}
 
-	public Answer() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public String toString() {
 		return "Answer [ans_id=" + ans_id + ", ans_body=" + ans_body + ", ans_date=" + ans_date + ", ans_status="
 				+ ans_status + ", query=" + query + ", user=" + user + "]";
-	}
-	
-	
-	
-	
-	
-	
-	
+	} 
+
 
 }

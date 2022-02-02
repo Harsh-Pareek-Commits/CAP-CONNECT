@@ -38,7 +38,7 @@ public class QueryController {
 		}
 		
 		
-		@GetMapping("/view/post_id}")
+		@GetMapping("/view/{post_id}")
 		public Query viewQueryById(@PathVariable("post_id")long post_id) throws QueryNotFoundException
 		{ 
 			return this.queryService.viewQueryById(post_id);

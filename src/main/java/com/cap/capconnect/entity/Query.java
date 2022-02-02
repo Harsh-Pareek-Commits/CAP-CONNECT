@@ -44,23 +44,9 @@ public class Query {
 	
 	@NotNull(message="Should not be empty")
 	@Column(name="query_status")
-	private boolean query_status;
+	private int query_status;
 	
-	public Category getCategory() {
-		return category;
-	}
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="cate_info", referencedColumnName="cate_id")
@@ -68,15 +54,13 @@ public class Query {
 	//query to user Mapping
 	@OneToOne(fetch=FetchType.EAGER)  
 	@JoinColumn(name="user_info",referencedColumnName="user_id")
-	private User user; 
-	
+	private User user;
 	public long getPost_id() {
 		return post_id;
 	}
-
-	/*
-	 * public void setPost_id(long post_id) { this.post_id = post_id; }
-	 */
+	public void setPost_id(long post_id) {
+		this.post_id = post_id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -95,18 +79,28 @@ public class Query {
 	public void setQuery_date(LocalDate query_date) {
 		this.query_date = query_date;
 	}
-	public boolean isQuery_status() {
+	public int getQuery_status() {
 		return query_status;
 	}
-	public void setQuery_status(boolean query_status) {
+	public void setQuery_status(int query_status) {
 		this.query_status = query_status;
 	}
-	
-	
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Query(long post_id, @NotNull(message = "Should not be empty") String title,
 			@NotNull(message = "Should not be empty") String query_body,
 			@FutureOrPresent(message = "Date cannot be past") LocalDate query_date,
-			@NotNull(message = "Should not be empty") boolean query_status, Category category, User user) {
+			@NotNull(message = "Should not be empty") int query_status, Category category, User user) {
 		super();
 		this.post_id = post_id;
 		this.title = title;
@@ -116,21 +110,11 @@ public class Query {
 		this.category = category;
 		this.user = user;
 	}
-
-	public Query() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public String toString() {
 		return "Query [post_id=" + post_id + ", title=" + title + ", query_body=" + query_body + ", query_date="
 				+ query_date + ", query_status=" + query_status + ", category=" + category + ", user=" + user + "]";
-	}
+	} 
 	
-	
-	
-	
-	
-}
 
+}

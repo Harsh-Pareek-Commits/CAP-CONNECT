@@ -39,7 +39,7 @@ public class AnswerController {
 		}
 		
 		
-		@GetMapping("/view/ans_id}")
+		@GetMapping("/view/{ans_id}")
 		public Answer viewAnswerById(@PathVariable("ans_id")long ans_id) throws AnswerNotFoundException
 		{ 
 			return this.answerService.viewAnswerById(ans_id);

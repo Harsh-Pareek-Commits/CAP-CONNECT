@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.cap.capconnect.entity.Query;
 import com.cap.capconnect.exception.QueryNotFoundException;
 import com.cap.capconnect.repository.IQueryRepository;
-
+@Service
 public class QueryServiceImpl implements IQueryService {
 	  Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 	  

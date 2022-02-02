@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name = "Cap_user")
 public class User {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

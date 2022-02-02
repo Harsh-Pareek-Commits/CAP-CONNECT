@@ -6,11 +6,12 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.cap.capconnect.entity.Answer;
 import com.cap.capconnect.exception.AnswerNotFoundException;
 import com.cap.capconnect.repository.IAnswerRepository;
-
+@Service
 public class AnswerServiceImpl implements IAnswerService {
 
 	  Logger log = LoggerFactory.getLogger(AnswerServiceImpl.class);

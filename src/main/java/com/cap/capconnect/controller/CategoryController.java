@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +30,9 @@ public class CategoryController {
 	ICategoryService categoryService;
 	
 		@PostMapping("/add")
-		public Category addCategory(@Valid @RequestBody Category category) throws CategoryNotFoundException {
-			 
-			return this.categoryService.addCategory(category);
+		public  ResponseEntity<Category> addCategory(@Valid @RequestBody Category category) throws CategoryNotFoundException {
+			return new ResponseEntity<>(this.categoryService.addCategory(category), HttpStatus.OK);
+		
 			 
 		}	
 		@GetMapping("/view")

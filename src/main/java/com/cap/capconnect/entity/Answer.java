@@ -112,6 +112,10 @@ public class Answer {
 	public String toString() {
 		return "Answer [ans_id=" + ans_id + ", ans_body=" + ans_body + ", ans_date=" + ans_date + ", ans_status="
 				+ ans_status + ", query=" + query + ", user=" + user + "]";
+	}
+
+	public Answer() {
+		super();
 	} 
 
 

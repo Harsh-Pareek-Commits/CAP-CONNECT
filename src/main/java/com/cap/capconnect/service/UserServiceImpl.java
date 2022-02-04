@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cap.capconnect.entity.User;
@@ -13,20 +14,34 @@ import com.cap.capconnect.exception.UserNotFoundException;
 import com.cap.capconnect.repository.IUserRepository;
 @Service
 public class UserServiceImpl implements IUserService {
+	
 	 Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 	@Autowired
 	  IUserRepository userRepository;
+	/*
+	 * @Autowired PasswordEncoder passwordEncoder;
+	 */
 
 	  //add
 	  @Override
 		public  User addUser(User user) throws UserNotFoundException  {
 			Optional<User> opt = null;
 			try {
-				opt = userRepository.findById(user.getUser_id());
+				opt = userRepository.findByEmail(user.getEmail());
 				if (opt.isPresent()) {
 					throw new UserNotFoundException("User name already exists");}
 				else
-					return userRepository.save(user);
+				{
+					/*if(user.getPassword()!=null)
+					{
+						String securePassword=passwordEncoder.encode(user.getPassword());
+						user.setPassword(securePassword);*/
+					    return userRepository.save(user);
+					}
+					/*else {
+						 throw new UserNotFoundException("Please Enter Password");
+					}*/
+				
 			} catch (Exception e) {
 				throw new UserNotFoundException("User cannot be added");
 			}

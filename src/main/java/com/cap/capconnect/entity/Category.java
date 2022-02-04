@@ -21,9 +21,12 @@ public class Category {
 		return cate_id;
 	}
 
-	/*
-	 * public void setCate_id(long cate_id) { this.cate_id = cate_id; }
-	 */
+	
+	public void setCate_id(long cate_id) {
+		this.cate_id = cate_id;
+	}
+
+
 	public String getCate_name() {
 		return cate_name;
 	}
@@ -38,7 +41,7 @@ public class Category {
 	}
 	public Category() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	@Override
 	public String toString() {

@@ -36,8 +36,8 @@ public class CategoryController {
 			 
 		}	
 		@GetMapping("/view")
-		public List<Category> viewCategory() throws CategoryNotFoundException {
-			return this.categoryService.viewCategory();
+		public ResponseEntity<List<Category>> viewCategory() throws CategoryNotFoundException {
+			return new ResponseEntity<>(this.categoryService.viewCategory(),HttpStatus.OK);
 		}
 		
 		

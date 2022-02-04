@@ -3,6 +3,8 @@ package com.cap.capconnect.controller;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.entity.Query;
 import com.cap.capconnect.exception.QueryNotFoundException;
 import com.cap.capconnect.service.IQueryService;
@@ -27,26 +30,26 @@ public class QueryController {
 	IQueryService queryService;
 	
 		@PostMapping("/add")
-		public Query addQuery(@Valid @RequestBody Query query) throws QueryNotFoundException {
+		public ResponseEntity<Query> addQuery(@Valid @RequestBody Query query) throws QueryNotFoundException {
 			 
-			return this.queryService.addQuery(query);
+			return new ResponseEntity<>(this.queryService.addQuery(query), HttpStatus.OK);
 			 
 		}	
 		@GetMapping("/view")
-		public List<Query> viewQuery() throws QueryNotFoundException {
-			return this.queryService.viewQuery();
+		public ResponseEntity<List<Query>> viewQuery() throws QueryNotFoundException {
+			return new ResponseEntity<>(this.queryService.viewQuery(), HttpStatus.OK);
 		}
 		
 		
 		@GetMapping("/view/{post_id}")
-		public Query viewQueryById(@PathVariable("post_id")long post_id) throws QueryNotFoundException
+		public ResponseEntity<Query> viewQueryById(@PathVariable("post_id")long post_id) throws QueryNotFoundException
 		{ 
-			return this.queryService.viewQueryById(post_id);
+			return new ResponseEntity<>( this.queryService.viewQueryById(post_id), HttpStatus.OK);
 		}
 		@DeleteMapping("/delete/{post_id}")
-		@ResponseBody
-		public Query deleteQuery(@PathVariable(value = "post_id") long post_id) throws QueryNotFoundException {
-			return this.queryService.deleteQuery(post_id);
+		
+		public ResponseEntity<Query> deleteQuery(@PathVariable(value = "post_id") long post_id) throws QueryNotFoundException {
+			return new ResponseEntity<>(this.queryService.deleteQuery(post_id), HttpStatus.OK);
 		}
 		@PutMapping("/update/{post_id}")
 		public Query updateQuery(@Valid @RequestBody Query query,@PathVariable("post_id")long post_id) throws QueryNotFoundException

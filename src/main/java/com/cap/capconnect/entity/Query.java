@@ -114,7 +114,11 @@ public class Query {
 	public String toString() {
 		return "Query [post_id=" + post_id + ", title=" + title + ", query_body=" + query_body + ", query_date="
 				+ query_date + ", query_status=" + query_status + ", category=" + category + ", user=" + user + "]";
+	}
+	public Query() {
+		super();
 	} 
+	
 	
 
 }

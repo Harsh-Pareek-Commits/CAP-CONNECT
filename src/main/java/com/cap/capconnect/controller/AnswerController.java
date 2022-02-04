@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cap.capconnect.entity.Answer;
+import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.exception.AnswerNotFoundException;
 import com.cap.capconnect.service.IAnswerService;
 @RestController
@@ -28,21 +31,21 @@ public class AnswerController {
 	IAnswerService answerService;
 	
 		@PostMapping("/add")
-		public Answer addAnswer(@Valid @RequestBody Answer answer) throws AnswerNotFoundException {
+		public ResponseEntity<Answer> addAnswer(@Valid @RequestBody Answer answer) throws AnswerNotFoundException {
 			 
-			return this.answerService.addAnswer(answer);
+			return new ResponseEntity<>(this.answerService.addAnswer(answer),HttpStatus.OK);
 			 
 		}	
 		@GetMapping("/view")
-		public List<Answer> viewAnswer() throws AnswerNotFoundException {
-			return this.answerService.viewAnswer();
+		public ResponseEntity<List<Answer>> viewAnswer() throws AnswerNotFoundException {
+			return new ResponseEntity<>(this.answerService.viewAnswer(),HttpStatus.OK);
 		}
 		
 		
 		@GetMapping("/view/{ans_id}")
-		public Answer viewAnswerById(@PathVariable("ans_id")long ans_id) throws AnswerNotFoundException
+		public ResponseEntity<Answer> viewAnswerById(@PathVariable("ans_id")long ans_id) throws AnswerNotFoundException
 		{ 
-			return this.answerService.viewAnswerById(ans_id);
+			return new ResponseEntity<>(this.answerService.viewAnswerById(ans_id),HttpStatus.OK);
 		}
 		@DeleteMapping("/delete/{ans_id}")
 		@ResponseBody

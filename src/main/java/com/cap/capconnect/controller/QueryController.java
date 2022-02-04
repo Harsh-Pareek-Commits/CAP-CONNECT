@@ -52,12 +52,11 @@ public class QueryController {
 			return new ResponseEntity<>(this.queryService.deleteQuery(post_id), HttpStatus.OK);
 		}
 		@PutMapping("/update/{post_id}")
-		public Query updateQuery(@Valid @RequestBody Query query,@PathVariable("post_id")long post_id) throws QueryNotFoundException
+		public ResponseEntity<Query> updateQuery(@Valid @RequestBody Query query,@PathVariable("post_id")long post_id) throws QueryNotFoundException
 		{
 			
-			Query existingQuery= this.updateQuery(query, post_id);
+			ResponseEntity<Query> existingQuery= this.updateQuery(query, post_id);
 			return existingQuery;
 		}
-
 
 }

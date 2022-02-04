@@ -50,15 +50,15 @@ public class CategoryController {
 		
 		@DeleteMapping("/delete/{cate_id}")
 		@ResponseBody
-		public Category deleteCategory(@PathVariable(value = "cate_id") long cate_id) throws CategoryNotFoundException {
-			return this.categoryService.deleteCategory(cate_id);
+		public ResponseEntity<Category> deleteCategory(@PathVariable(value = "cate_id") long cate_id) throws CategoryNotFoundException {
+			return new ResponseEntity<>(this.categoryService.deleteCategory(cate_id),HttpStatus.OK);
 		}
 		
 		@PutMapping("/update/{cate_id}")
-		public Category updateCategory(@Valid @RequestBody Category category,@PathVariable("cate_id")long cate_id) throws CategoryNotFoundException
+		public ResponseEntity<Category>  updateCategory(@Valid @RequestBody Category category,@PathVariable("cate_id")long cate_id) throws CategoryNotFoundException
 		{
 			
-			Category existingCategory= this.updateCategory(category, cate_id);
+			ResponseEntity<Category> existingCategory= this.updateCategory(category, cate_id);
 			return existingCategory;
 		}
 

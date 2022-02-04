@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cap.capconnect.entity.Answer;
-import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.exception.AnswerNotFoundException;
 import com.cap.capconnect.service.IAnswerService;
 @RestController
@@ -49,14 +48,15 @@ public class AnswerController {
 		}
 		@DeleteMapping("/delete/{ans_id}")
 		@ResponseBody
-		public Answer deleteAnswer(@PathVariable(value = "ans_id") long ans_id) throws AnswerNotFoundException {
-			return this.answerService.deleteAnswer(ans_id);
+		public  ResponseEntity<Answer> deleteAnswer(@PathVariable(value = "ans_id") long ans_id) throws AnswerNotFoundException {
+			return new ResponseEntity<>(this.answerService.deleteAnswer(ans_id),HttpStatus.OK);
 		}
-		@PutMapping("/update/{post_id}")
-		public Answer updateAnswer(@Valid @RequestBody Answer answer,@PathVariable("ans_id")long ans_id) throws AnswerNotFoundException
+		@PutMapping("/update/{ans_id}")
+		@ResponseBody
+		public ResponseEntity<Answer> updateAnswer(@Valid @RequestBody Answer answer,@PathVariable("ans_id")long ans_id) throws AnswerNotFoundException
 		{
 			
-			Answer existingAnswer= this.updateAnswer(answer, ans_id);
+			ResponseEntity<Answer> existingAnswer= this.updateAnswer(answer, ans_id);
 			return existingAnswer;
 		}
 

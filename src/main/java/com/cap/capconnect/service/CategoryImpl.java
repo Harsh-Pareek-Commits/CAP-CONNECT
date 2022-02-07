@@ -47,24 +47,25 @@ public class CategoryImpl implements ICategoryService {
 
 			}
 		}
-		//update
-				@Override
-				public Category updateCategory(Category category) throws CategoryNotFoundException {
-					Optional<Category> opt = null;
-					try {
-						opt =categoryRepository.findById(category.getCate_id());
-						if (opt.isPresent()) {
+		
+				 @Override
+				    public Category updateCategory(Category  category ,long cate_id) throws CategoryNotFoundException {
 
-							categoryRepository.save(category);
-						} else {
-							throw new CategoryNotFoundException("Category details not found");
-						}
-					} catch (Exception e) {
-						
-						throw new CategoryNotFoundException("Category cannot be updated");
-					}
-					return opt.get();
-			}
+				        if (categoryRepository.findById(cate_id).isPresent()){
+				        	Category existingCategory = categoryRepository.findById(cate_id).get();
+
+				            existingCategory.setCate_name(category.getCate_name());
+				            
+
+				            Category updatedCategory = categoryRepository.save(existingCategory);
+
+				            return new Category(updatedCategory.getCate_id(),
+				                    updatedCategory.getCate_name());
+				        }else{
+								throw new CategoryNotFoundException("Category cannot be added");
+							
+				        }
+				    }
 		
 				//view
 				

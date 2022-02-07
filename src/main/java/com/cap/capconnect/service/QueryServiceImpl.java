@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.entity.Query;
+import com.cap.capconnect.exception.CategoryNotFoundException;
 import com.cap.capconnect.exception.QueryNotFoundException;
 import com.cap.capconnect.repository.IQueryRepository;
 @Service
@@ -60,22 +62,25 @@ public class QueryServiceImpl implements IQueryService {
 	
 	//update
 		@Override
-		public Query updateQuery(Query query) throws QueryNotFoundException {
-			Optional<Query> opt = null;
-			try {
-				opt = queryRepository.findById(query.getPost_id());
-				if (opt.isPresent()) {
+		public Query updateQuery(Query  query ,long post_id) throws QueryNotFoundException {
 
-					queryRepository.save(query);
-				} else {
-					throw new QueryNotFoundException("Query details not found");
-				}
-			} catch (Exception e) {
+	        if (queryRepository.findById(post_id).isPresent()){
+	        	Query existingQuery = queryRepository.findById(post_id).get();
+
+	            existingQuery.setQuery_body(query.getQuery_body());
+	            existingQuery.setTitle(query.getTitle());
+	            existingQuery.setQuery_date(query.getQuery_date());
+	            existingQuery.setQuery_status(query.getQuery_status());
+	            
+	            Query updatedQuery = queryRepository.save(existingQuery);
+
+	            return new Query(updatedQuery.getPost_id(),
+	                    updatedQuery.getQuery_body(), updatedQuery.getTitle(), updatedQuery.getQuery_date(), updatedQuery.getQuery_status(), null, null);
+	        }else{
+					throw new QueryNotFoundException("Query cannot be added");
 				
-				throw new QueryNotFoundException("Query cannot be updated");
-			}
-			return opt.get();
-	}
+	        }
+	    }
 
 		//view
 		

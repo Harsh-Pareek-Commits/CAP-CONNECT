@@ -9,7 +9,7 @@ public interface IUserService {
 	
 	public  User  addUser(User user) throws UserNotFoundException;
 	public User  deleteUser(long query_id)throws UserNotFoundException;
-	public User updateUser(User user) throws UserNotFoundException;
+	public User updateUser(User user, long user_id) throws UserNotFoundException;
 	public  List<User> viewUser() throws UserNotFoundException;
 	public User viewUserById(long user_id)  throws UserNotFoundException;
 }

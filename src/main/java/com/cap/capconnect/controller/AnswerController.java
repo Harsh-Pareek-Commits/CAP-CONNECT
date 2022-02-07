@@ -16,10 +16,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cap.capconnect.entity.Answer;
+import com.cap.capconnect.entity.Query;
 import com.cap.capconnect.exception.AnswerNotFoundException;
+import com.cap.capconnect.exception.QueryNotFoundException;
 import com.cap.capconnect.service.IAnswerService;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -53,12 +56,11 @@ public class AnswerController {
 		}
 		@PutMapping("/update/{ans_id}")
 		@ResponseBody
-		public ResponseEntity<Answer> updateAnswer(@Valid @RequestBody Answer answer,@PathVariable("ans_id")long ans_id) throws AnswerNotFoundException
-		{
-			
-			ResponseEntity<Answer> existingAnswer= this.updateAnswer(answer, ans_id);
-			return existingAnswer;
-		}
+		 @ResponseStatus(HttpStatus.OK)
+	    public ResponseEntity<Answer> updateAnswer(@PathVariable(value = "ans_id") long ans_id,
+	                                                         @RequestBody Answer answer) throws AnswerNotFoundException{
+	        return new ResponseEntity<>(answerService.updateAnswer(answer,ans_id), HttpStatus.OK);
+	    }
 
 
 

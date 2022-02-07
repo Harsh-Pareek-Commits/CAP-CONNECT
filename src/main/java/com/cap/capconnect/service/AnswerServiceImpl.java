@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cap.capconnect.entity.Answer;
+import com.cap.capconnect.entity.Query;
 import com.cap.capconnect.exception.AnswerNotFoundException;
+import com.cap.capconnect.exception.QueryNotFoundException;
 import com.cap.capconnect.repository.IAnswerRepository;
 @Service
 public class AnswerServiceImpl implements IAnswerService {
@@ -54,23 +56,25 @@ public Answer deleteAnswer(long ans_id) throws AnswerNotFoundException {
 }
 
 @Override
-public   Answer updateAnswer( Answer  answer) throws  AnswerNotFoundException {
-	Optional< Answer> opt = null;
-	try {
-		opt = answerRepository.findById(answer.getAns_id());
-		if (opt.isPresent()) {
+public Answer updateAnswer(Answer  answer ,long ans_id) throws AnswerNotFoundException {
 
-			answerRepository.save(answer);
-		} else {
-			throw new AnswerNotFoundException(" Answer details not found");
-		}
-	} catch (Exception e) {
+    if (answerRepository.findById(ans_id).isPresent()){
+    	Answer existingAnswer = answerRepository.findById(ans_id).get();
+
+        existingAnswer.setAns_body(answer.getAns_body());
+        existingAnswer.setAns_status(answer.getAns_status());
+        existingAnswer.setAns_date(answer.getAns_date());
+   
+        
+        Answer updatedAnswer = answerRepository.save(existingAnswer);
+
+        return new Answer(updatedAnswer.getAns_id(),
+                updatedAnswer.getAns_body(), updatedAnswer.getAns_date(), updatedAnswer.getAns_status(), null, null);
+    }else{
+			throw new AnswerNotFoundException("Answer cannot be added");
 		
-		throw new  AnswerNotFoundException(" Answer cannot be updated");
-	}
-	return opt.get();
+    }
 }
-
 
 	@Override
 	public Answer approveAnswer(long ans_id) {

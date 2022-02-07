@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.entity.Query;
+import com.cap.capconnect.exception.CategoryNotFoundException;
 import com.cap.capconnect.exception.QueryNotFoundException;
 import com.cap.capconnect.service.IQueryService;
 
@@ -52,11 +54,10 @@ public class QueryController {
 			return new ResponseEntity<>(this.queryService.deleteQuery(post_id), HttpStatus.OK);
 		}
 		@PutMapping("/update/{post_id}")
-		public ResponseEntity<Query> updateQuery(@Valid @RequestBody Query query,@PathVariable("post_id")long post_id) throws QueryNotFoundException
-		{
-			
-			ResponseEntity<Query> existingQuery= this.updateQuery(query, post_id);
-			return existingQuery;
-		}
+	    @ResponseStatus(HttpStatus.OK)
+	    public ResponseEntity<Query> updateQuery(@PathVariable(value = "post_id") long post_id,
+	                                                         @RequestBody Query query) throws QueryNotFoundException{
+	        return new ResponseEntity<>(queryService.updateQuery(query,post_id), HttpStatus.OK);
+	    }
 
 }

@@ -9,7 +9,7 @@ public interface IQueryService {
 	
 	public  Query  addQuery(Query query) throws QueryNotFoundException;
 	public  Query deleteQuery(long post_id) throws QueryNotFoundException;
-	public  Query updateQuery(Query query) throws QueryNotFoundException;
+	public  Query updateQuery(Query query,long post_id) throws QueryNotFoundException;
 	public  List<Query> viewQuery() throws QueryNotFoundException;
 	public Query viewQueryById(long post_id)  throws QueryNotFoundException;
 	

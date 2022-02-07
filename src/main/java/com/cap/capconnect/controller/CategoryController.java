@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cap.capconnect.entity.Category;
@@ -55,12 +56,11 @@ public class CategoryController {
 		}
 		
 		@PutMapping("/update/{cate_id}")
-		public ResponseEntity<Category>  updateCategory(@Valid @RequestBody Category category,@PathVariable("cate_id")long cate_id) throws CategoryNotFoundException
-		{
-			
-			ResponseEntity<Category> existingCategory= this.updateCategory(category, cate_id);
-			return existingCategory;
-		}
+	    @ResponseStatus(HttpStatus.OK)
+	    public ResponseEntity<Category> updateCategory(@PathVariable(value = "cate_id") long cate_id,
+	                                                         @RequestBody Category category) throws CategoryNotFoundException{
+	        return new ResponseEntity<>(categoryService.updateCategory(category,cate_id), HttpStatus.OK);
+	    }
 
 
 }

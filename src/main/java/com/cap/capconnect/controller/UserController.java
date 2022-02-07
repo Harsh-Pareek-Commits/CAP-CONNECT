@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cap.capconnect.entity.Category;
@@ -46,12 +47,11 @@ public class UserController {
 		}
 		
 		@PutMapping("/update/{user_id}")
-		public ResponseEntity<User> updateUser(@Valid @RequestBody User user,@PathVariable("user_id")long user_id) throws UserNotFoundException
-		{
-			
-			ResponseEntity<User> existingUser= this.updateUser(user, user_id);
-			return existingUser;
-		}
+	    @ResponseStatus(HttpStatus.OK)
+	    public ResponseEntity<User> updateUser(@PathVariable(value = "user_id") long user_id,
+	                                                         @RequestBody User user) throws UserNotFoundException{
+	        return new ResponseEntity<>(userService.updateUser(user,user_id), HttpStatus.OK);
+	    }
 		
 		@DeleteMapping("/delete/{user_id}")
 		@ResponseBody

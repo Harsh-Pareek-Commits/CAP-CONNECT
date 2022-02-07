@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.entity.User;
+import com.cap.capconnect.exception.CategoryNotFoundException;
 import com.cap.capconnect.exception.UserNotFoundException;
 import com.cap.capconnect.repository.IUserRepository;
 @Service
@@ -66,25 +68,26 @@ public class UserServiceImpl implements IUserService {
 
 			}
 		}
-		//update
-				@Override
-				public User updateUser(User user) throws UserNotFoundException {
-					Optional<User> opt = null;
-					try {
-						opt = userRepository.findById(user.getUser_id());
-						if (opt.isPresent()) {
+		@Override
+	    public User updateUser(User  user ,long user_id) throws UserNotFoundException {
 
-							userRepository.save(user);
-						} else {
-							throw new UserNotFoundException("User details not found");
-						}
-					} catch (Exception e) {
-						
-						throw new UserNotFoundException("User cannot be updated");
-					}
-					return opt.get();
-			}
+	        if (userRepository.findById(user_id).isPresent()){
+	        	User existingUser = userRepository.findById(user_id).get();
 
+	            existingUser.setName(user.getName());
+	            existingUser.setDesignation(user.getDesignation());
+	            existingUser.setEmail(user.getEmail());
+	            existingUser.setPassword(user.getPassword());
+	           
+	            User updatedUser = userRepository.save(existingUser);
+
+	            return new User(updatedUser.getUser_id(),updatedUser.getName(),
+	                    updatedUser.getDesignation(),updatedUser.getEmail(),updatedUser.getPassword());
+	        }else{
+					throw new UserNotFoundException("Category cannot be added");
+				
+	        }
+	    }
 				//view
 				
 				@Override

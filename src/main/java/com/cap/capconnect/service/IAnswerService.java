@@ -10,7 +10,7 @@ public interface IAnswerService {
 
 	public  Answer  addAnswer(Answer answer) throws AnswerNotFoundException ;
 	public Answer deleteAnswer(long ans_id) throws AnswerNotFoundException ;
-	public Answer updateAnswer(Answer answer) throws AnswerNotFoundException ;
+	public Answer updateAnswer(Answer answer, long ans_id) throws AnswerNotFoundException ;
 	public Answer approveAnswer(long ans_id)throws AnswerNotFoundException ;
 	public List<Answer> viewAnswer() throws AnswerNotFoundException ;
 	public Answer viewAnswerById(long ans_id)  throws AnswerNotFoundException;

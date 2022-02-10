@@ -13,6 +13,7 @@ import com.cap.capconnect.entity.Query;
 import com.cap.capconnect.exception.AnswerNotFoundException;
 import com.cap.capconnect.exception.QueryNotFoundException;
 import com.cap.capconnect.repository.IAnswerRepository;
+import com.cap.capconnect.repository.IQueryRepository;
 @Service
 public class AnswerServiceImpl implements IAnswerService {
 
@@ -20,6 +21,9 @@ public class AnswerServiceImpl implements IAnswerService {
 	  
 	 @Autowired
 	 IAnswerRepository answerRepository;
+	 @Autowired
+	 IQueryRepository queryRepository;
+
 
 	
 @Override
@@ -117,4 +121,15 @@ public Answer updateAnswer(Answer  answer ,long ans_id) throws AnswerNotFoundExc
 		return answer;
 	}
 
+	@Override
+	public List<Answer> viewAnswerBypostId(long post_id) throws  AnswerNotFoundException {
+		
+		Optional <Query> opt = queryRepository.findById(post_id);
+		//Query query=new Query(opt.getPost_id(),opt.getTitle(),opt.getQuery_body(),opt.getQuery_date(),opt.getQuery_status(),opt.getCategory(),opt.getUser());
+		
+		return this.answerRepository.findByQuery(opt.get());
+		
+	}
+
 }
+

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
@@ -37,7 +38,7 @@ public class Answer {
 	@NotNull(message="Should not be empty")
 	private int ans_status;
 	//answer to query Mapping
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="query_info",referencedColumnName="post_id")
 	private Query query; 
 	

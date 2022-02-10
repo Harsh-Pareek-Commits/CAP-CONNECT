@@ -49,6 +49,14 @@ public class AnswerController {
 		{ 
 			return new ResponseEntity<>(this.answerService.viewAnswerById(ans_id),HttpStatus.OK);
 		}
+		@GetMapping("/viewBypostId/{post_id}")
+		public ResponseEntity<List<Answer>> viewAnswerBypostId(@PathVariable("post_id") long post_id) throws AnswerNotFoundException
+		{
+			
+			return  new ResponseEntity<>(this.answerService.viewAnswerBypostId(post_id),HttpStatus.OK);
+			
+		}
+		
 		@DeleteMapping("/delete/{ans_id}")
 		@ResponseBody
 		public  ResponseEntity<Answer> deleteAnswer(@PathVariable(value = "ans_id") long ans_id) throws AnswerNotFoundException {

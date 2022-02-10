@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.cap.capconnect.entity.Answer;
 import com.cap.capconnect.exception.AnswerNotFoundException;
+import com.cap.capconnect.exception.QueryNotFoundException;
+import com.cap.capconnect.entity.Query;
 
 public interface IAnswerService {
 	
@@ -15,4 +17,6 @@ public interface IAnswerService {
 	public List<Answer> viewAnswer() throws AnswerNotFoundException ;
 	public Answer viewAnswerById(long ans_id)  throws AnswerNotFoundException;
 
+	public List<Answer> viewAnswerBypostId(long post_id) throws AnswerNotFoundException;
+	
 }

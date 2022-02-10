@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.cap.capconnect.entity.Answer;
 import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.entity.Query;
 import com.cap.capconnect.exception.CategoryNotFoundException;

@@ -12,4 +12,7 @@ public interface IUserService {
 	public User updateUser(User user, long user_id) throws UserNotFoundException;
 	public  List<User> viewUser() throws UserNotFoundException;
 	public User viewUserById(long user_id)  throws UserNotFoundException;
+	public String signIn(User user) throws UserNotFoundException;
+	public User signOut(User user);
+	public  User getUser(User user);
 }

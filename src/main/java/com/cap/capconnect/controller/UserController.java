@@ -23,6 +23,7 @@ import com.cap.capconnect.entity.Category;
 import com.cap.capconnect.entity.User;
 import com.cap.capconnect.exception.CategoryNotFoundException;
 import com.cap.capconnect.exception.UserNotFoundException;
+import com.cap.capconnect.security.JwtResponse;
 import com.cap.capconnect.service.IUserService;
 
 
@@ -58,4 +59,20 @@ public class UserController {
 		public ResponseEntity<User> deleteUser(@PathVariable(value = "user_id") long user_id) throws UserNotFoundException {
 			return new ResponseEntity<>(this.userService.deleteUser(user_id),HttpStatus.OK);
 		}
+		@PostMapping("/signin")
+		public ResponseEntity<JwtResponse> signuser(@RequestBody @Valid User user) throws UserNotFoundException
+		{    String token= this.userService.signIn(user);
+		     long id=this.userService.getUser(user).getUser_id();
+			JwtResponse jwtResponse= new JwtResponse(token,id);
+			return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
+
+		}
+		@PostMapping("/signout")
+		public ResponseEntity<User> signoutuser(@RequestBody @Valid User user) 
+		{
+		this.userService.signOut(user);
+		return new ResponseEntity<>(user, HttpStatus.RESET_CONTENT);
+
+		}
+
 }
